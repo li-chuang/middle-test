@@ -1,4 +1,4 @@
-package com.lichuang.com.Util;
+package com.lichuang.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
