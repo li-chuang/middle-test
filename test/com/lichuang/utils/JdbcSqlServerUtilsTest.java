@@ -1,4 +1,4 @@
-package com.lichuang.com.Util;
+package com.lichuang.util;
 
 import org.junit.After;
 import org.junit.Assert;
