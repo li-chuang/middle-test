@@ -6,6 +6,16 @@ public class Manager {
 	private String username;
 	private String password;
 	private String level; //管理员级别(root、高级、一般)
+	
+	public Manager(){
+		
+	}
+	
+	public Manager(String username, String password, String level) {
+		this.username = username;
+		this.password = password;
+		this.level = level;
+	}
 	public String getUsername() {
 		return username;
 	}
