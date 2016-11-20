@@ -9,7 +9,23 @@ public class Student {
 	private String age;
 	private String department;//院系
 	private String major;//专业
+	private String classes;//年级
 	
+	public Student(){
+		
+	}
+	
+	public Student(String id, String name, String password, String sex,
+			String age, String department, String major, String classes) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.sex = sex;
+		this.age = age;
+		this.department = department;
+		this.major = major;
+		this.classes = classes;
+	}
 	public String getId() {
 		return id;
 	}
@@ -51,6 +67,12 @@ public class Student {
 	}
 	public void setMajor(String major) {
 		this.major = major;
+	}
+	public String getClasses() {
+		return classes;
+	}
+	public void setClasses(String classes) {
+		this.classes = classes;
 	}
 
 
