@@ -7,6 +7,17 @@ public class Course {
 	private String name;
 	private String score;//学分
 	private String costHour;//课时
+	
+	public Course(){
+		
+	}
+	
+	public Course(String id, String name, String score, String costHour) {
+		this.id = id;
+		this.name = name;
+		this.score = score;
+		this.costHour = costHour;
+	}
 	public String getId() {
 		return id;
 	}
