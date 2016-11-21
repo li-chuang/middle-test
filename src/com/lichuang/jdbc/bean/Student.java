@@ -6,7 +6,7 @@ public class Student {
 	private String name;
 	private String password;
 	private String sex;
-	private String age;
+	private String birthday;
 	private String department;//院系
 	private String major;//专业
 	private String classes;//年级
@@ -16,12 +16,12 @@ public class Student {
 	}
 	
 	public Student(String id, String name, String password, String sex,
-			String age, String department, String major, String classes) {
+			String birthday, String department, String major, String classes) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.sex = sex;
-		this.age = age;
+		this.birthday = birthday;
 		this.department = department;
 		this.major = major;
 		this.classes = classes;
@@ -50,11 +50,11 @@ public class Student {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getAge() {
-		return age;
+	public String getBirthday() {
+		return birthday;
 	}
-	public void setAge(String age) {
-		this.age = age;
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 	public String getDepartment() {
 		return department;
