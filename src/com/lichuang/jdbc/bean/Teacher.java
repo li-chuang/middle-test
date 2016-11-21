@@ -6,7 +6,7 @@ public class Teacher {
 	private String name;
 	private String password;
 	private String sex;
-	private String age;
+	private String birthday;
 	private String course;//课程方向
 	
 	public Teacher(){
@@ -14,12 +14,12 @@ public class Teacher {
 	}
 	
 	public Teacher(String id, String name, String password, String sex,
-			String age, String course) {
+			String birthday, String course) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.sex = sex;
-		this.age = age;
+		this.birthday = birthday;
 		this.course = course;
 	}
 	public String getId() {
@@ -40,11 +40,11 @@ public class Teacher {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getAge() {
-		return age;
+	public String getBirthday() {
+		return birthday;
 	}
-	public void setAge(String age) {
-		this.age = age;
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 	public String getCourse() {
 		return course;
