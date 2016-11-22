@@ -1,5 +1,6 @@
 package com.lichuang.jdbc.bean;
 
+
 //课程
 public class Course {
 	
