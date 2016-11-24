@@ -1,5 +1,7 @@
 package com.lichuang.jdbc.dao;
 
+import java.sql.Connection;
+
 import com.lichuang.jdbc.bean.Manager;
 import com.lichuang.jdbc.bean.Student;
 import com.lichuang.jdbc.bean.Teacher;
@@ -16,18 +18,18 @@ import com.lichuang.jdbc.bean.Teacher;
  */
 public interface ILoginDao {
 	
-	public Student studentLogin();
+	public Student studentLogin(Connection conn, String username,String password);
 	
-	public Teacher teacherLogin();
+	public Teacher teacherLogin(Connection conn, String username,String password);
 	
-	public Manager managerLogin();
+	public Manager managerLogin(Connection conn, String username,String password);
 	
-	public int registManager(Manager manager);
+	public int registManager(Connection conn, Manager manager);
 	
-	public int updateStudentInfo();
+	public int updateStudentInfo(Connection conn, String username,String password);
 	
-	public int updateTeacherInfo();
+	public int updateTeacherInfo(Connection conn, String username,String password);
 	
-	public int updateManagerInfo();
+	public int updateManagerInfo(Connection conn, String username,String password);
 
 }
