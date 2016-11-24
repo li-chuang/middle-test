@@ -71,6 +71,16 @@ public class JdbcSqlServerUtils {
 			}
 		}
 	}
+	
+	public static void free(PreparedStatement ps){
+		if(ps!=null){
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		try {
