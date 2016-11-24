@@ -39,16 +39,35 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-				
+		}				
 		return student;
 	}
 
 	@Override
 	public Teacher teacherLogin(Connection conn, String username,
 			String password) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql ="";
+		Teacher teacher = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				teacher = new Teacher();
+				teacher.setId(rs.getString("id"));
+				teacher.setName(rs.getString("name"));
+				teacher.setPassword(rs.getString("password"));
+				teacher.setSex(rs.getString("sex"));
+				teacher.setBirthday("birthday");
+				teacher.setCourse(rs.getString("course"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return teacher;
 	}
 
 	@Override
@@ -88,3 +107,4 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 	
 
 }
+
