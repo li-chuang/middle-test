@@ -9,6 +9,7 @@ import com.lichuang.jdbc.bean.Manager;
 import com.lichuang.jdbc.bean.Student;
 import com.lichuang.jdbc.bean.Teacher;
 import com.lichuang.jdbc.dao.ILoginDao;
+import com.lichuang.jdbc.util.JdbcMySqlUtils;
 
 public class LoginDaoJdbcImpl implements ILoginDao {
 
@@ -39,6 +40,8 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(rs, ps);
 		}				
 		return student;
 	}
@@ -66,14 +69,15 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		} finally{
+			JdbcMySqlUtils.free(rs, ps);
+		}			
 		return teacher;
 	}
 
 	@Override
 	public Manager managerLogin(Connection conn, String username,
 			String password) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -107,4 +111,3 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 	
 
 }
-
