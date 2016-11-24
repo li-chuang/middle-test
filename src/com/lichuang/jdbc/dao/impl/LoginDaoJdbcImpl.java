@@ -51,7 +51,7 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 			String password) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql ="";
+		String sql ="select * from t_teacher where name =? and password = ? ";
 		Teacher teacher = null;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -78,34 +78,109 @@ public class LoginDaoJdbcImpl implements ILoginDao {
 	@Override
 	public Manager managerLogin(Connection conn, String username,
 			String password) {
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql ="select * from t_manager where name =? and password = ?";
+		Manager manager = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				manager = new Manager();
+				manager.setUsername(rs.getString("username"));
+				manager.setPassword(rs.getString("password"));
+				manager.setLevel(rs.getString("level"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(rs, ps);
+		}
+		return manager;
 	}
 
+	/**
+	 * 管理员身份可开通，也可以先注册后开通
+	 */
 	@Override
-	public int registManager(Manager manager) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int registManager(Connection conn, Manager manager) {
+		PreparedStatement ps = null;
+		int rs = 0;
+		String sql = "insert into t_manager(username,password,level) values (?,?,?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, manager.getUsername());
+			ps.setString(2, manager.getPassword());
+			ps.setString(3, manager.getLevel());
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(ps);
+		}
+		return rs;
 	}
 
+	//修改密码
 	@Override
 	public int updateStudentInfo(Connection conn, String username,
 			String password) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement ps = null;
+		int rs = 0;
+		String sql = "update t_student set password = ? where username =? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, password);
+			ps.setString(2, username);
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(ps);
+		}	
+		return rs;
 	}
-
+	
+	//修改密码
 	@Override
 	public int updateTeacherInfo(Connection conn, String username,
 			String password) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement ps = null;
+		int rs = 0;
+		String sql = "update t_teacher set password =? where username = ? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, password);
+			ps.setString(2, username);
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(ps);
+		}		
+		return rs;
 	}
 
+	//修改密码
 	@Override
 	public int updateManagerInfo(Connection conn, String username,
 			String password) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement ps = null;
+		int rs = 0;
+		String sql = "update t_manager set password = ? where username = ? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, password);
+			ps.setString(2, username);
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free(ps);
+		}
+		return rs ;
 	}
 
 	
