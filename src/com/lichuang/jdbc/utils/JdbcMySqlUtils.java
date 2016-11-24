@@ -2,7 +2,9 @@ package com.lichuang.jdbc.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 
@@ -50,6 +52,24 @@ public class JdbcMySqlUtils {
 				} catch (Exception e3) {
 					e3.printStackTrace();
 				}
+			}
+		}
+	}
+	
+	public static void free(ResultSet rs, PreparedStatement ps){
+		try {
+			if(ps != null){
+				ps.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if(rs !=null){
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 	}
