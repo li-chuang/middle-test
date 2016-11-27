@@ -57,7 +57,31 @@ public class StudentDaoJdbcImpl implements IStudentDao {
 
 	@Override
 	public int insertStudent(Connection conn, Student student) {
-		return 0;
+		PreparedStatement ps = null;
+		int result = 0;
+		StringBuffer sql = new StringBuffer("insert t_student(id,name,password,sex,birthday,school,department,major,classes) values ");
+		StringBuffer valueSql = new StringBuffer();
+		if(student != null){
+			valueSql.append("(");
+			valueSql.append(student.getId()+",");
+			valueSql.append(student.getName()+",");
+			valueSql.append(student.getPassword()+",");
+			valueSql.append(student.getSex()+",");
+			valueSql.append(student.getBirthday()+",");
+			valueSql.append(student.getSchool()+",");
+			valueSql.append(student.getDepartment()+",");
+			valueSql.append(student.getMajor()+",");
+			valueSql.append(student.getClasses());
+			valueSql.append(")");
+		}
+		sql.append(valueSql.toString());
+		try {
+			ps = conn.prepareStatement(sql.toString());
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
