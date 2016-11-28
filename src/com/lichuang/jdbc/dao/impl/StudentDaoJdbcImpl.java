@@ -172,6 +172,18 @@ public class StudentDaoJdbcImpl implements IStudentDao {
 	public int[] deleteBatch(Connection conn, List<String> list) {
 		PreparedStatement ps = null;
 		int[] result = null;
+		String sql = "delete t_student where id = ? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			for(String id :list){
+				ps.setString(1, id);
+				ps.addBatch();
+			}
+			result = ps.executeBatch();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
