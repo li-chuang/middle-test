@@ -80,13 +80,34 @@ public class StudentDaoJdbcImpl implements IStudentDao {
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} finally{
+			JdbcMySqlUtils.free(ps);
+		}	
 		return result;
 	}
 
 	@Override
 	public int updateStudent(Connection conn, Map<String, String> map) {
-		return 0;
+		PreparedStatement ps = null;
+		int rs = 0;
+		StringBuffer valueSql = new StringBuffer();
+		StringBuffer sql = new StringBuffer("update t_student set ");
+		Set<String> set = map.keySet();
+		Iterator<String> iter = set.iterator();
+		while(iter.hasNext()){
+			String key = iter.next();
+			valueSql.append(" " + key + "= "+map.get(key));
+		}
+		sql.append(valueSql.toString()).append("where id = "+map.get("id"));
+		try {
+			ps = conn.prepareStatement(sql.toString());
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcMySqlUtils.free( ps);
+		}	
+		return rs;
 	}
 
 	@Override
