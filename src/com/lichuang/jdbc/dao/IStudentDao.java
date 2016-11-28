@@ -20,8 +20,8 @@ public interface IStudentDao {
 	
 	public int deleteStudent(Connection conn, Map<String,String> map);
 	
-	public int insertBatch(Connection conn, List<Student> list);
+	public int[] insertBatch(Connection conn, List<Student> list);
 	
-	public int deleteBatch(Connection conn , List<String> list);
+	public int[] deleteBatch(Connection conn , List<String> list);
 
 }
