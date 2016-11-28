@@ -135,13 +135,44 @@ public class StudentDaoJdbcImpl implements IStudentDao {
 	}
 
 	@Override
-	public int insertBatch(Connection conn, List<Student> list) {
-		return 0;
+	public int[] insertBatch(Connection conn, List<Student> list) {
+		PreparedStatement ps = null;
+		int[] result = null;
+		StringBuffer sql = new StringBuffer("insert t_student(id,name,password,sex,birthday,school,department,major,classes) values ");
+		StringBuffer valueSql = new StringBuffer();
+		for(Student student:list){
+			valueSql.append("(");
+			valueSql.append(student.getId()+",");
+			valueSql.append(student.getName()+",");
+			valueSql.append(student.getPassword()+",");
+			valueSql.append(student.getSex()+",");
+			valueSql.append(student.getBirthday()+",");
+			valueSql.append(student.getSchool()+",");
+			valueSql.append(student.getDepartment()+",");
+			valueSql.append(student.getMajor()+",");
+			valueSql.append(student.getClasses());
+			valueSql.append(")");
+			sql.append(valueSql.toString());
+			try {
+				ps = conn.prepareStatement(sql.toString());
+				ps.addBatch();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+		}
+		try {
+			result = ps.executeBatch();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public int deleteBatch(Connection conn, List<String> list) {
-		return 0;
+	public int[] deleteBatch(Connection conn, List<String> list) {
+		PreparedStatement ps = null;
+		int[] result = null;
+		return result;
 	}
 
 }
