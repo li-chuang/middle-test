@@ -53,6 +53,15 @@ public class StudentDaoJdbcImplTest {
 
 	@After
 	public void tearDown() throws Exception {
+		//连接数据库
+		IDatabaseConnection connection = null;
+		Connection conn = JdbcMySqlUtils.getConnection();
+		connection = new DatabaseConnection(conn);
+		
+		//将数据库中原有的数据导入进去
+		IDataSet dataSet = new FlatXmlDataSet(new File("student_bak.xml"));
+		DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+		
 	}
 
 	@Test
@@ -86,4 +95,3 @@ public class StudentDaoJdbcImplTest {
 	}
 
 }
-
