@@ -35,7 +35,7 @@ public class StudentDaoJdbcImplTest {
 			File file = File.createTempFile("student_bak", ".xml");
 			FlatXmlDataSet.write(backupDataSet, new FileOutputStream(file));
 			
-			//将准备好的文件读入
+//			//将准备好的文件读入
 			IDataSet dataSet = new FlatXmlDataSet(new File("student_pre.xml"));
 			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);//先清除后插入
 		} catch (Exception e) {
