@@ -32,8 +32,8 @@ public class StudentDaoJdbcImplTest {
 			//将指定数据库中的的数据备份
 			QueryDataSet backupDataSet = new QueryDataSet(connection);
 			backupDataSet.addTable("t_student");			
-			File file = File.createTempFile("student_bak", ".xml");
-			FlatXmlDataSet.write(backupDataSet, new FileOutputStream(file));
+			//File file = File.createTempFile("student_bak", ".xml");
+			FlatXmlDataSet.write(backupDataSet, new FileOutputStream(new File("student_bak.xml")));
 			
 //			//将准备好的文件读入
 			IDataSet dataSet = new FlatXmlDataSet(new File("student_pre.xml"));
@@ -95,3 +95,4 @@ public class StudentDaoJdbcImplTest {
 	}
 
 }
+
