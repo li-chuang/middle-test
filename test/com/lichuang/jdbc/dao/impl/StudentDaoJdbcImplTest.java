@@ -15,12 +15,14 @@ import java.util.Map;
 
 
 
+
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Assert;
@@ -42,8 +44,9 @@ public class StudentDaoJdbcImplTest {
 		IDatabaseConnection connection = null;
 		try {
 			//获得连接
-			Connection conn = JdbcMySqlUtils.getConnection();
-			connection = new DatabaseConnection(conn);
+			//Connection conn = JdbcMySqlUtils.getConnection();
+			connect = JdbcMySqlUtils.getConnection();
+			connection = new DatabaseConnection(connect);
 			
 			//将指定数据库中的的数据备份
 			QueryDataSet backupDataSet = new QueryDataSet(connection);
@@ -71,13 +74,17 @@ public class StudentDaoJdbcImplTest {
 	public void tearDown() throws Exception {
 		//连接数据库
 		IDatabaseConnection connection = null;
-		Connection conn = JdbcMySqlUtils.getConnection();
-		connection = new DatabaseConnection(conn);
+		//Connection conn = JdbcMySqlUtils.getConnection();
+		connect = JdbcMySqlUtils.getConnection();
+		connection = new DatabaseConnection(connect);
 		
 		//将数据库中原有的数据导入进去
 		IDataSet dataSet = new FlatXmlDataSet(new File("student_bak.xml"));
 		DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 		
+		if(connect !=null){
+			connect.close();
+		}
 	}
 
 	@Test
@@ -104,7 +111,8 @@ public class StudentDaoJdbcImplTest {
 			
 			// 预想结果和实际结果的比较
 			// 预期结果取得
-			IDataSet expectedDataSet  = new FlatXmlDataSet(new File("student_exp.xml"));
+			//IDataSet expectedDataSet  = new FlatXmlDataSet(new File("student_exp.xml"));
+			IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(new File("student_exp.xml"));
 			ITable expectedTable = expectedDataSet.getTable("t_student");
 			// 实际取得结果
 			connection = new DatabaseConnection(JdbcMySqlUtils.getConnection());
