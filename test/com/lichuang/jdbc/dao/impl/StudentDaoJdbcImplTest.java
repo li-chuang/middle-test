@@ -1,25 +1,41 @@
 package com.lichuang.jdbc.dao.impl;
 
-import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+
+
+
+
 
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import sun.security.x509.InvalidityDateExtension;
+
+import com.lichuang.jdbc.bean.Student;
 import com.lichuang.jdbc.util.JdbcMySqlUtils;
 
 public class StudentDaoJdbcImplTest {
+	
+	StudentDaoJdbcImpl dao = new StudentDaoJdbcImpl();
+	Connection connect = null;
 
 	@Before
 	public void setUp() {
@@ -66,33 +82,68 @@ public class StudentDaoJdbcImplTest {
 
 	@Test
 	public void testGetStudent() {
-		fail("Not yet implemented");
+		try {
+			connect = JdbcMySqlUtils.getConnection();
+			Map<String,String> map = new HashMap<String,String>();
+			map.put("id", "2016301001");
+			Student student = dao.getStudent(connect, map);
+			Assert.assertEquals("Mike", student.getName());
+			Assert.assertEquals("123456", student.getPassword());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 
 	@Test
 	public void testInsertStudent() {
-		fail("Not yet implemented");
+		Student student = new Student("2016301003", "Lee", "123456", "Man", "1991-07-15", "math", "computer", "3班", "HBGYDX");
+		IDatabaseConnection connection=null;
+		try {
+			int result = dao.insertStudent(JdbcMySqlUtils.getConnection(), student);
+			Assert.assertNotNull(result);
+			
+			// 预想结果和实际结果的比较
+			// 预期结果取得
+			IDataSet expectedDataSet  = new FlatXmlDataSet(new File("student_exp.xml"));
+			ITable expectedTable = expectedDataSet.getTable("t_student");
+			// 实际取得结果
+			connection = new DatabaseConnection(JdbcMySqlUtils.getConnection());
+			IDataSet databaseDataSet = connection.createDataSet();
+			ITable actualTable = databaseDataSet.getTable("t_student");
+			// 比较
+			Assert.assertEquals(expectedTable, actualTable);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			if(connection !=null){
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Test
 	public void testUpdateStudent() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testDeleteStudent() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testInsertBatch() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testDeleteBatch() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }
-
